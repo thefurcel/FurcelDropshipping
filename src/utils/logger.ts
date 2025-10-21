@@ -1,8 +1,20 @@
 import pino from 'pino';
 
-export const logger = pino({
+// Simple logger configuration for production
+const loggerConfig: any = {
   level: process.env.LOG_LEVEL || 'info',
-  transport: process.env.NODE_ENV !== 'production' ? { target: 'pino-pretty' } : undefined,
-});
+};
+
+// Only add pretty transport in development
+if (process.env.NODE_ENV !== 'production') {
+  try {
+    loggerConfig.transport = { target: 'pino-pretty' };
+  } catch (error) {
+    // Fallback if pino-pretty is not available
+    console.warn('pino-pretty not available, using basic logger');
+  }
+}
+
+export const logger = pino(loggerConfig);
 
 
