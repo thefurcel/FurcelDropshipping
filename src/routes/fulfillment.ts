@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { FulfillmentService } from '../services/fulfillment.service.js';
-import { SupplierLocationService } from '../services/supplier-location.service.js';
-import { logger } from '../utils/logger.js';
+import { FulfillmentService } from '../services/fulfillment.service';
+import { SupplierLocationService } from '../services/supplier-location.service';
+import { logger } from '../utils/logger';
 
 const router = Router();
 const fulfillmentService = new FulfillmentService();
@@ -208,4 +208,5 @@ router.post('/test-order', async (req, res) => {
 });
 
 export { router };
+
 

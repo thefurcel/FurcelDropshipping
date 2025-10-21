@@ -1,7 +1,7 @@
-import { shopify } from '../shopify/client.js';
-import { SupplierLocationService } from './supplier-location.service.js';
-import { FulfillmentRequest, FulfillmentResponse, SupplierOrderRequest } from '../types/fulfillment.js';
-import { logger } from '../utils/logger.js';
+import { shopify } from '../shopify/client';
+import { SupplierLocationService } from './supplier-location.service';
+import { FulfillmentRequest, FulfillmentResponse, SupplierOrderRequest } from '../types/fulfillment';
+import { logger } from '../utils/logger';
 
 export class FulfillmentService {
   private supplierLocationService: SupplierLocationService;
@@ -213,4 +213,5 @@ export class FulfillmentService {
     return this.supplierLocationService;
   }
 }
+
 

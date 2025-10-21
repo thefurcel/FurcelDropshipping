@@ -11,6 +11,7 @@ export const shopify = shopifyApi({
   scopes,
   hostName,
   apiVersion: ApiVersion.July24,
+  isEmbeddedApp: true,
 });
 
 

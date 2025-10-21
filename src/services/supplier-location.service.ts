@@ -1,5 +1,5 @@
-import { SupplierLocation, ProductSupplierMapping } from '../types/fulfillment.js';
-import { logger } from '../utils/logger.js';
+import { SupplierLocation, ProductSupplierMapping } from '../types/fulfillment';
+import { logger } from '../utils/logger';
 
 // In-memory storage for demo purposes
 // In production, this should be replaced with a database
@@ -194,4 +194,5 @@ export class SupplierLocationService {
     logger.info('Sample supplier locations initialized');
   }
 }
+
 

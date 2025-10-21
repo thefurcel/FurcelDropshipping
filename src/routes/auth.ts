@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { shopify } from '../shopify/client.js';
-import { logger } from '../utils/logger.js';
+import { shopify } from '../shopify/client';
+import { logger } from '../utils/logger';
 
 const router = Router();
 
@@ -145,4 +145,5 @@ async function clearSession(shop: string): Promise<void> {
 }
 
 export { router };
+
 

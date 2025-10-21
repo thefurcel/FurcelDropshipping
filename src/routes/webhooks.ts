@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { FulfillmentService } from '../services/fulfillment.service.js';
-import { logger } from '../utils/logger.js';
+import { FulfillmentService } from '../services/fulfillment.service';
+import { logger } from '../utils/logger';
 
 const router = Router();
 const fulfillmentService = new FulfillmentService();
