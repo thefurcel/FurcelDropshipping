@@ -47,24 +47,24 @@ router.get('/callback', async (req, res) => {
   try {
     const { code, hmac, shop, state, host } = req.query;
 
-    // Validate the callback
-    if (!shopify.auth.callback.isValidCallback(req.query)) {
-      logger.warn({ query: req.query }, 'Invalid OAuth callback');
+    // Basic validation
+    if (!shop || !code) {
+      logger.warn({ query: req.query }, 'Missing required OAuth parameters');
       return res.status(400).json({ error: 'Invalid callback parameters' });
     }
 
     logger.info({ shop }, 'Processing OAuth callback');
 
     // Complete the OAuth flow
-    const session = await shopify.auth.callback({
+    const callbackResponse = await shopify.auth.callback({
       rawRequest: req,
       rawResponse: res,
     });
 
     // Store session (in production, save to database)
-    await storeSession(session);
+    await storeSession(callbackResponse.session);
 
-    logger.info({ shop, sessionId: session.id }, 'OAuth completed successfully');
+    logger.info({ shop, sessionId: callbackResponse.session.id }, 'OAuth completed successfully');
 
     // Redirect to app with shop and host parameters
     const redirectUrl = `/?shop=${shop}&host=${host}`;

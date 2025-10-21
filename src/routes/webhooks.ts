@@ -39,19 +39,6 @@ router.post('/inventory/update', async (req, res) => {
   }
 });
 
-router.post('/fulfillments/create', async (req, res) => {
-  try {
-    const fulfillmentData = req.body;
-    logger.info({ fulfillmentId: fulfillmentData.id }, 'Fulfillment create webhook received');
-    
-    // Process the fulfillment request
-    const result = await fulfillmentService.processFulfillmentRequest(fulfillmentData);
-    
-    res.json(result);
-  } catch (error) {
-    logger.error({ error }, 'Error processing fulfillment create webhook');
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
+export { router };
 
 

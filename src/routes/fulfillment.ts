@@ -44,7 +44,7 @@ router.get('/locations', async (req, res) => {
   try {
     const supplierId = req.query.supplierId as string;
     
-    let locations;
+    let locations: any[] = [];
     if (supplierId) {
       locations = await supplierLocationService.getLocationsBySupplier(supplierId);
     } else {

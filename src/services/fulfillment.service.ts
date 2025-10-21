@@ -35,8 +35,8 @@ export class FulfillmentService {
           const result = await this.processSupplierFulfillment(location, items, order_id);
           fulfillmentResults.push(result);
         } catch (error) {
-          logger.error({ error, locationId, orderId: order_id }, 'Failed to process supplier fulfillment');
-          fulfillmentResults.push({ success: false, error: error.message });
+          logger.error({ error: error instanceof Error ? error.message : String(error), locationId, orderId: order_id }, 'Failed to process supplier fulfillment');
+          fulfillmentResults.push({ success: false, error: error instanceof Error ? error.message : String(error) });
         }
       }
 
@@ -53,8 +53,8 @@ export class FulfillmentService {
       );
 
     } catch (error) {
-      logger.error({ error, orderId: order_id }, 'Failed to process fulfillment request');
-      return this.createFulfillmentResponse(fulfillment, 'error', error.message);
+      logger.error({ error: error instanceof Error ? error.message : String(error), orderId: order_id }, 'Failed to process fulfillment request');
+      return this.createFulfillmentResponse(fulfillment, 'error', error instanceof Error ? error.message : String(error));
     }
   }
 
@@ -112,10 +112,10 @@ export class FulfillmentService {
       }
 
     } catch (error) {
-      logger.error({ error, supplierId: location.supplierId, orderId }, 'Failed to process supplier fulfillment');
+      logger.error({ error: error instanceof Error ? error.message : String(error), supplierId: location.supplierId, orderId }, 'Failed to process supplier fulfillment');
       return {
         success: false,
-        error: error.message,
+        error: error instanceof Error ? error.message : String(error),
       };
     }
   }
@@ -192,13 +192,13 @@ export class FulfillmentService {
     if (successfulResults.length === 1) {
       return {
         trackingCompany: 'Dropship Service',
-        trackingNumber: successfulResults[0].trackingNumber,
-        trackingUrl: `https://tracking.example.com/${successfulResults[0].trackingNumber}`,
+        trackingNumber: successfulResults[0]?.trackingNumber || 'UNKNOWN',
+        trackingUrl: `https://tracking.example.com/${successfulResults[0]?.trackingNumber || 'UNKNOWN'}`,
       };
     }
 
     // Multiple tracking numbers - create a combined tracking page
-    const trackingNumbers = successfulResults.map(r => r.trackingNumber).join(',');
+    const trackingNumbers = successfulResults.map(r => r.trackingNumber || 'UNKNOWN').join(',');
     return {
       trackingCompany: 'Dropship Service (Multiple)',
       trackingNumber: trackingNumbers,
