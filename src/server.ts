@@ -13,6 +13,27 @@ const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 app.use(cors());
 app.use(bodyParser.json({ limit: '2mb' }));
 
+// Root route
+app.get('/', (_req, res) => {
+  res.json({ 
+    message: 'The Furcel Dropshipping App is running!',
+    version: '0.1.0',
+    endpoints: {
+      health: '/health',
+      api: '/api',
+      fulfillment: '/api/fulfillment',
+      products: '/api/products',
+      orders: '/api/orders',
+      suppliers: '/api/suppliers',
+      pricing: '/api/pricing',
+      reports: '/api/reports',
+      webhooks: '/api/webhooks',
+      auth: '/auth'
+    },
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Health check endpoint
 app.get('/health', (_req, res) => {
   res.json({ 
